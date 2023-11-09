@@ -1,0 +1,518 @@
+<div class="modal fade" id="changepassModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Cambiar Contraseña</h2>
+        <a
+          class="btn-close no-format-link"
+          data-bs-dismiss="modal"
+          id="cierre"
+          onclick="clearModalForms()"
+        ></a>
+      </div>
+      <div class="modal-body p-4">
+        <div
+          class="alert alert-danger d-none"
+          role="alert"
+          id="changepassAlert"
+        >
+          Replace this with alert text.
+        </div>
+        <form id="newPass">
+          <div class="mb-3">
+            <label for="Password" class="form-label">Contraseña Actual</label>
+            <input
+              type="password"
+              class="form-control"
+              placeholder="••••••••••••"
+              id="password_actual"
+              name="contra1"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="loginPassword" class="form-label"
+              >Nueva Contraseña</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              placeholder="••••••••••••"
+              id="new_Password1"
+              name="contra2"
+            />
+          </div>
+          <div>
+            <label for="loginPassword" class="form-label"
+              >Confirmar contraseña</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              placeholder="••••••••••••"
+              id="new_Password2"
+              name="contra3"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer d-flex flex-column p-4">
+        <button
+          type="submit"
+          form="newPass"
+          class="btn fondo_pagina d-block w-100 m-0"
+          id="savechanges"
+        >
+          Guardar Cambios
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de dirección -->
+<div class="modal fade" id="addressModal">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">Dirección</h2>
+        <a
+          class="btn-close no-format-link"
+          data-bs-dismiss="modal"
+          id="cierre"
+          onclick="clearModalForms()"
+        ></a>
+      </div>
+      <div class="modal-body p-4">
+        <div
+          class="alert alert-danger d-none"
+          role="alert"
+          id="addressAlert"
+        >
+          Replace this with alert text.
+        </div>
+        <form id="addressForm">
+          <input type="text" id="addressId" hidden readonly disabled>
+          <div class="mb-3">
+            <label for="addressName" class="form-label">Nombre completo</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Juan Perez Perez"
+              id="addressName"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="addressAddress1" class="form-label">Dirección (1)</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Calle Real 33"
+              id="addressAddress1"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="addressAddress2" class="form-label">Dirección (2)</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="P01 3 Izq."
+              id="addressAddress2"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="addressCity" class="form-label">Municipio</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Illescas"
+              id="addressCity"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="addressCp" class="form-label">Código postal</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="28320"
+              id="addressCp"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="addressRegion" class="form-label">Provincia</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Toledo"
+              id="addressRegion"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="addressCountry" class="form-label">País</label>
+            <input
+              disabled
+              readonly
+              type="text"
+              class="form-control"
+              value="España"
+              id="addressCountry"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="addressPhone" class="form-label">Número de teléfono</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="633 33 33 33"
+              id="addressPhone"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="addressInstructions" class="form-label">Instrucciones de entrega</label>
+            <textarea
+              class="form-control"
+              id="addressInstructions"
+            ></textarea>
+          </div>
+        </form>  
+      </div>
+      <div class="modal-footer d-flex flex-column p-4">
+        <button
+          type="submit"
+          form="addressForm"
+          class="btn fondo_pagina d-block w-100 m-0"
+          id="addressSave"
+        >
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="alert alert-danger d-none mt-5 mx-xl-5" role="alert" id="accountAlert">
+  Replace this with alert text.
+</div>
+<div class="py-5 px-xl-5 account-group">
+  <!-- Detalles de la cuenta -->
+  <div class="card account-card shadow" style="flex: 1">
+    <div class="card-body">
+      <h2 class="card-title">Detalles de la cuenta</h2>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <div class="form-floating">
+            <input
+              type="text"
+              readonly
+              class="form-control-plaintext"
+              id="accountDetailUsername"
+            />
+            <label for="accountDetailUsername">Nombre de usuario</label>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="form-floating">
+            <input
+              type="mail"
+              readonly
+              class="form-control-plaintext account-editable"
+              id="accountDetailMail"
+              placeholder="Dirección de correo electrónico"
+            />
+            <label for="accountDetailMail"
+              >Dirección de correo electrónico</label
+            >
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="form-floating">
+            <input
+              type="text"
+              readonly
+              class="form-control-plaintext account-editable"
+              id="accountDetailFullname"
+              placeholder="Nombre completo"
+            />
+            <label for="accountDetailFullname">Nombre completo</label>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div class="form-floating">
+            <input
+              type="date"
+              readonly
+              class="form-control-plaintext account-editable"
+              id="accountDetailDateofbirth"
+              placeholder="Fecha de nacimiento"
+            />
+            <label for="accountDetailDateofbirth">Fecha de nacimiento</label>
+          </div>
+        </li>
+      </ul>
+      <div class="mt-5">
+        <button
+          class="btn btn-success w-100 mb-3 d-none"
+          id="accountDetailSaveButton"
+        >
+          Guardar cambios
+        </button>
+        <button
+          class="btn btn-danger w-100 mb-3 d-none"
+          id="accountDetailDiscardButton"
+        >
+          Decartar cambios
+        </button>
+        <button class="btn fondo_pagina w-100 mb-3" id="accountDetailEditButton">
+          Editar perfil
+        </button>
+        <button
+          class="btn fondo_pagina w-100 mb-3"
+          id="accountDetailChangepassButton"
+          data-bs-toggle="modal"
+          data-bs-target="#changepassModal"
+        >
+          Cambiar contraseña
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Pedidos -->
+  <div class="card account-card shadow" style="flex: 1000">
+    <div class="card-body">
+      <h2 class="mb-3">Mis pedidos</h2>
+      <ul class="list-group" id="pedidos">
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Obtención de datos de la cuenta -->
+<script>
+  let loggedin = false
+  let userData = {}
+
+
+  $(document).on("setSessionData", (event, loggedin, userData) => {
+    if (!loggedin) return;
+    $("#accountDetailUsername").val(userData.username);
+    $("#accountDetailMail").val(userData.mail);
+    $("#accountDetailFullname").val(userData.fullname);
+    $("#accountDetailDateofbirth").val(userData.dateOfBirth);
+  })
+
+  let data = getSessionData()
+  loggedin = data[0]
+  userData = data[1]
+  if (loggedin) {
+    $("#accountDetailUsername").val(userData.username);
+    $("#accountDetailMail").val(userData.mail);
+    $("#accountDetailFullname").val(userData.fullname);
+    $("#accountDetailDateofbirth").val(userData.dateOfBirth);
+  }
+</script>
+
+<!-- Edición de cuenta -->
+<script>
+  function AllowEditing() {
+    $("#accountDetailEditButton").addClass("d-none");
+    $("#accountDetailChangepassButton").addClass("d-none");
+    $("#accountDetailSaveButton").removeClass("d-none");
+    $("#accountDetailDiscardButton").removeClass("d-none");
+    $(".account-editable")
+      .removeClass("form-control-plaintext")
+      .addClass("form-control")
+      .removeAttr("readonly");
+  }
+
+  function DisableEditing() {
+    $("#accountDetailEditButton").removeClass("d-none");
+    $("#accountDetailChangepassButton").removeClass("d-none");
+    $("#accountDetailSaveButton").addClass("d-none");
+    $("#accountDetailDiscardButton").addClass("d-none");
+    $(".account-editable")
+      .addClass("form-control-plaintext")
+      .removeClass("form-control")
+      .attr("readonly", "true");
+  }
+
+  $("#accountDetailEditButton").click((event) => {
+    event.preventDefault();
+    AllowEditing();
+  });
+
+  $("#accountDetailSaveButton").click((event) => {
+    event.preventDefault();
+    DisableEditing();
+    modifyAccount(
+      $('#accountDetailMail').val(),
+      $('#accountDetailFullname').val(),
+      $('#accountDetailDateofbirth').val()
+    )
+    [loggedin, userData] = getSessionData()
+    if (loggedin) {
+      $("#accountDetailUsername").val(userData.username);
+      $("#accountDetailMail").val(userData.mail);
+      $("#accountDetailFullname").val(userData.fullname);
+      $("#accountDetailDateofbirth").val(userData.dateOfBirth);
+    }
+  });
+
+  $("#accountDetailDiscardButton").click((event) => {
+    event.preventDefault();
+    DisableEditing();
+    [loggedin, userData] = getSessionData()
+    if (loggedin) {
+      $("#accountDetailUsername").val(userData.username);
+      $("#accountDetailMail").val(userData.mail);
+      $("#accountDetailFullname").val(userData.fullname);
+      $("#accountDetailDateofbirth").val(userData.dateOfBirth);
+    }
+  });
+</script>
+
+<script>
+  $("#newPass").submit((event) => {
+    event.preventDefault();
+
+    let data_contra = {
+      contra_actual: $("#password_actual").val(),
+      contra_nueva_1: $("#new_Password1").val(),
+      contra_nueva_2: $("#new_Password2").val(),
+      type: "changepass",
+    };
+
+    $.ajax({
+      method: "POST",
+      url: "/Php/cambiar_contraseña.php",
+      data: data_contra,
+
+      success: (response) => {
+        response = JSON.parse(response);
+        if (response.status == "success") {
+          clearModalForms();
+          $("#changepassAlert")
+            .removeClass("d-none")
+            .removeClass("alert-danger")
+            .addClass("alert-success")
+            .html(response.message);
+        } else {
+          $("#changepassAlert")
+            .removeClass("d-none")
+            .addClass("alert-danger")
+            .removeClass("alert-success")
+            .html(response.message);
+        }
+      },
+
+      error: (err) => (console.error = err),
+    });
+  });
+
+  $('.modal').on("hide.bs.modal", clearModalForms)
+</script>
+
+<script>
+
+  function setPedidos(data) {
+    $('#pedidos').html('')
+    if (!data[0]) {
+      $('#pedidos').append('<li class="list-group-item text-center"><b>No ha realizado ningún pedido todavía</b></li>')
+      return false
+    }
+
+    $('#pedidos').append(`
+        <li class="list-group-item">
+          <div class="row text-center">
+            <div class="col-4"><b>Fecha y hora</b></div>
+            <div class="col-4"><b>Total</b></div>
+            <div class="col-4"><b>Acciones</b></div>
+          </div>
+        </li>
+      `)
+    
+
+    data.forEach(element => {
+      console.log(element)
+      let date = new Date(element.date)
+      let format_date = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`
+      $('#pedidos').append(`
+        <li class="list-group-item">
+          <div class="row text-center">
+            <div class="col-4">${format_date}</div>
+            <div class="col-4">${(element.total/100).toFixed(2).replace('.', ',')}€</div>
+            <div class="col-4"><button onclick="window.open('${element.url}', '_blank')" class="btn fondo_pagina">Ver detalles</button></div>
+          </div>
+        </li>
+      `)
+    });
+  }
+
+  $(document).on("setSessionData", (evn, loggedin, sessiondata) => {
+    if (!loggedin) return
+    $.ajax({
+      method: "POST",
+      url: "/Php/cuenta.php",
+      data: {
+        type: 'getPedidos'
+      },
+
+      success: (response) => {
+        response = JSON.parse(response);
+        if (response.status == 'success') {
+          setPedidos(response.data)
+        } else {
+          console.error(response.message)
+        }
+      },
+
+      error: (err) => (console.error = err),
+    })
+  })
+
+  if (loggedin) {
+    $.ajax({
+      method: "POST",
+      url: "/Php/cuenta.php",
+      data: {
+        type: 'getPedidos'
+      },
+
+      success: (response) => {
+        response = JSON.parse(response);
+        if (response.status == 'success') {
+          setPedidos(response.data)
+        } else {
+          console.error(response.message)
+        }
+      },
+
+      error: (err) => (console.error = err),
+    })
+  } 
+</script>
+
+<style>
+  .account-group {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .account-card {
+    border: 0;
+    min-width: min(400px, 100%);
+  }
+
+  .address-group {
+    margin-top: 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, min(300px, 100%));
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .address-card > .card-body > p {
+    font-size: 12px;
+    line-height: 16px;
+  }
+</style>

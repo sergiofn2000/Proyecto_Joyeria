@@ -1,0 +1,250 @@
+<div class="card" style="border: 0" id="producto_detallado">
+  <script>
+    console.log("hola")
+    function añadir_carrito(nombre) {
+      let data_product = {
+        type: "Productos",
+        data: nombre,
+      };
+      $.ajax({
+        // Hace la peticion
+        method: "POST",
+        url: "/Php/añadir.php",
+        data: data_product,
+
+        // si el estado del response es success ejecuta lo siguiente
+        success: (response) => {
+          response = JSON.parse(response);
+          if (response.status == "success") {
+            $.router.go("/cart");
+          }
+        },
+        error: (err) => console.log(err),
+      });
+    }
+
+    function añadir_fav(nombre) {
+      let data_product = {
+        type: "Productos",
+        data: nombre,
+      };
+      $.ajax({
+        // Hace la peticion
+        method: "POST",
+        url: "/Php/añadir_favoritos.php",
+        data: data_product,
+
+        // si el estado del response es success ejecuta lo siguiente
+        success: (response) => {
+          // alert(response);
+          response = JSON.parse(response);
+          if (response.status == "error-login") {
+            $("#loginAlert")
+              .removeClass("d-none")
+              .addClass("alert-danger")
+              .removeClass("alert-success")
+              .html(
+                "Debe iniciar sesión para añadir este producto a favoritos."
+              );
+            $("#loginModal").modal("show");
+          }
+        },
+        error: (err) => console.error(err),
+      });
+    }
+
+    function getProductDetails(productId) {
+      // Lo que te de la gana
+      let data_products = {
+        type: "Producto",
+        data: productId,
+      };
+
+      $.ajax({
+        method: "POST",
+        url: "/Php/productos_detallados.php",
+        data: data_products,
+        success: (response) => {
+          response = JSON.parse(response);
+        
+          producto = response.producto;
+          producto2 = response.producto2;
+          let descripcion = producto.descripcion_larga;
+          descripcion = descripcion.replace("933 33 33 33", "633 33 33 33");
+          descripcion = descripcion.replace(
+            "info@joyeria.es",
+            "contacto@joyeria.com"
+          );
+          $("#producto_detallado").empty();
+          $("#producto_detallado").append(`
+                <div class="row"  >
+                     <div class="col-12 col-md-6 text-center align-self-center">
+                        <img class="img-fluid1 img-position" style="cursor: pointer" src='../catalogo/${producto.imagen_ftp}'>
+                    </div>
+                     
+                    <div class=" col-12 col-md-6 info "  id="card_column">
+                           <div class="row title ">
+                                <div class="col">
+                                    <div id="titulo-producto">${producto.descripcion}</h2>
+                                     
+                                    </div>
+                                    <div>Referencia:
+                                      ${producto.ref_producto}
+                                     
+                                    </div>
+                                    <div>Variante:
+                                      ${producto2.ref_variante}
+                                     
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="col-12 detalles separador">
+                                    <h4>Detalles</h4> 
+                                    <div id="descripcion">${descripcion} </div>
+                                </div>
+                                `);
+
+          Object.keys(producto.atributos).forEach(function (key) {
+            let nombre = key;
+            let valores = producto.atributos[key];
+            if (nombre != "Personalización") {
+              $("#card_column").append(`
+                                <div class="row Caracteristicas separador"  id='Caracteristicas' data-value='${nombre}'>
+                                    <h4>${nombre}</h4>
+                                    <div id="${nombre}_div">
+                                      <select id="${nombre}">
+                                      </select>
+                                      </div>
+                                    `);
+              valores.sort((a, b) => a.localeCompare(b));
+
+              valores.sort((a, b) => {
+                const numeroA = parseInt(a.substring(3));
+                const numeroB = parseInt(b.substring(3));
+                return numeroA - numeroB;
+              });
+
+              $(`#${nombre}`).append(
+                valores
+                  .map((valor) => {
+                    return `<option value="${valor}" ${
+                      response.variant[nombre] === valor ? "selected" : ""
+                    }>${valor}</option>`;
+                  })
+                  .join("")
+              );
+            } else {
+              $("#card_column").append(`
+                                <div class="row Caracteristicas separador"  id='Caracteristicas' data-value='${nombre}'>
+                                    <h4>${nombre}</h4>
+                                    <div id="${nombre}_div">
+                                      </div>
+                                    `);
+              valores.forEach((valor) => {
+                $(`#${nombre}_div`).append(
+                  `<br><br>${valor}     <input id="${nombre}_1">`
+                );
+              });
+            }
+          });
+
+          $("select").change((event) => {
+            let new_variante = [];
+            $("select").each((idx, val) =>
+              new_variante.push(`${val.id}: ${val.value}`)
+            );
+            new_variante = new_variante.join(" ");
+            $.ajax({
+              method: "POST",
+              url: "/Php/productos_detallados.php",
+              data: {
+                type: "getVariantId",
+                data: {
+                  ref: producto.ref_producto,
+                  variante: new_variante,
+                },
+              },
+              success: (response) => {
+                response = JSON.parse(response);
+                if (response.status == "success") {
+                  //console.log(response)
+                  $.router.go(`/product/${response.data}`);
+                }
+              },
+              error: (err) => (console.log = err),
+            });
+          });
+
+          $("#card_column").append(`
+                                </div>
+                                <div class="row Precio separador" id='Precio' data-value='${producto.atributos}'>
+                                    <h4>Precio</h4>
+                                    <div id="Precio2">${producto.precio_venta} €</div>
+                                </div>
+                            </div>
+                            `);
+          if (response.Favorito != "Si") {
+            $("#card_column").append(`
+                            <div class="col boton-detalles separador" id="boton_detalles">
+                                <button  id="btnAñadirCarrito" class='btn fondo_pagina' onclick='añadir_carrito(${productId})'>Añadir al carrito</button> <a href="#" id="boton_fav" onclick='añadir_fav(${producto.id})'><i id="corazon" class="fa fa-heart-o"></i></a>
+                            </div>
+                            </div>
+                            `);
+          } else {
+            $("#card_column").append(`
+                            <div class="col boton-detalles separador" id="boton_detalles">
+                                <button  id="btnAñadirCarrito" class='btn fondo_pagina' onclick='añadir_carrito(${productId})'>Añadir al carrito</button> <a href="#" id="boton_fav" onclick='añadir_fav(${producto.id})'><img width="16" height="16" src="https://img.icons8.com/tiny-color/16/like.png" alt="like"/></a>
+                            </div>
+                            </div>
+                            `);
+          }
+          getSessionData();
+
+          // Elimina la talla si no tiene en la base de datos
+          if ($("#Caracteristicas").attr("data-value") == "null") {
+            $("#Caracteristicas").empty();
+          }
+        },
+
+        error: (err) => (console.log = err),
+      });
+    }
+  </script>
+</div>
+<style>
+  .img-fluid1 {
+    max-width: 400px;
+    max-height: 400px;
+  }
+
+  #titulo-producto {
+    font-size: 25px;
+  }
+
+  .title {
+    margin-top: 5%;
+  }
+
+  .separador {
+    margin-top: 3%;
+  }
+
+  .boton-detalles {
+    margin-bottom: 25px;
+  }
+
+  @media (max-width: 767px) {
+    /* Estilos para pantallas de 700px o menos */
+    .title {
+      text-align: center;
+      margin-top: 0%;
+    }
+
+    .boton-detalles {
+      margin-top: 5%;
+      text-align: center;
+      margin-bottom: 5%;
+    }
+  }
+</style>

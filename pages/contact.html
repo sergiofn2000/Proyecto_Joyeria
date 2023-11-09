@@ -1,0 +1,111 @@
+<!-- Formulario de contacto -->
+<div class="row">
+    <div class="col p-5">
+        <h1 class="text-center mb-5">Formulario de contacto</h1>
+
+        <div
+          class="alert alert-danger d-none"
+          role="alert"
+          id="contactAlert"
+        >
+          Replace this with alert text.
+        </div>
+        <form id="contactForm" method="post">
+            <div class="row">
+                <div class="col-12 col-xl-3 mb-3">
+                    <label for="contactName" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" placeholder="Antonio" id="contactName"  required>
+                    
+                </div>
+                <div class="col-12 col-xl-3 mb-3">
+                    <label for="contactLastname" class="form-label">Apellidos</label>
+                    <input type="text" class="form-control" placeholder="Pérez Gonzalez" id="contactLastname"  required>
+                </div>
+                <div class="col-12 col-xl-3 mb-3">
+                    <label for="contactPhone" class="form-label">Teléfono de contacto</label>
+                    <input type="text" class="form-control" placeholder="612 34 56 78" id="contactPhone"  required>
+                </div>
+                <div class="col-12 col-xl-3 mb-3">
+                    <label for="contactMail" class="form-label">Correo electrónico de contacto</label>
+                    <input type="text" class="form-control" placeholder="correoelectronico@mail.com" id="contactMail" required>
+                </div>
+                <div class="col-12 col-xl-3 mb-3">
+                    <label for="contactMail" class="form-label">Asunto</label>
+                    <input type="text" class="form-control" placeholder="Asunto" id="contacsubject"  required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col mb-3">
+                    <label for="contactText" class="form-label">Mensaje</label>
+                    <textarea type="text" class="form-control" id="contactText"  style="min-height: 200px; "required ></textarea>
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col-12 col-xl-3 mb-3 form-group"><br>
+                    <!-- <input type="checkbox" class="form-check-input" id="contactAccept">
+                    <label class="form-check-label" for="contactAccept">He leído y acepto la <a href="">política de
+                            privacidad</a>.</label> <br> -->
+                    <button  type="submit" form="contactForm" class="btn fondo_pagina d-block w-100 m-0"  id="enviar" >Enviar</button>
+                </div>
+            </div>
+        </form>
+        
+    </div>
+</div>
+
+<!-- Información de contacto -->
+<div class="row fondo_pagina p-5">
+    <h1 class="text-center mb-5">Información de contacto</h1>
+    <div class="col-12 col-xl-6 px-xl-5">
+        <iframe class="w-100 h-100"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d20522.307001568566!2d-3.8617186327481217!3d40.12759801487176!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd41f11943804a53%3A0x3cfb4f86aef3f3fa!2s45200%20Illescas%2C%20Toledo!5e0!3m2!1ses!2ses!4v1699459959071!5m2!1ses!2ses"
+            style="border:0;" allowfullscreen="false" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <div class="col-12 col-xl-6 py-5 px-lg-5">
+        <p class="mb-3"><a href="tel:+34687859323" class="no-format-link"><i class="fa-solid fa-phone"></i> 687 85 93
+                23</a></p>
+        <p class="mb-3"><a href="mailto:contacto@joyeria.com" class="no-format-link"><i
+                    class="fa-solid fa-envelope"></i> contacto@joyeria.com</a></p>
+        <p class="mb-5"><i class="fa-solid fa-map-location"></i> Calle Real 33, 45200, Illescas, Toledo</p>
+    </div>
+</div>
+
+<script>
+
+    $("#contactForm").submit(function () {
+        event.preventDefault();
+
+        let data_form = {
+            nombre_usuario: $('#contactName').val(),
+            apellido_usuario: $('#contactLastname').val(),
+            telefono_usuario: $('#contactPhone').val(),
+            correo_usuario: $('#contactMail').val(),
+            mensaje_usuario: $('#contactText').val(),
+            asunto: $('#contacsubject').val(),
+        };
+
+        $.ajax({
+            method: "POST",
+            url: "/Php/contacto.php",
+            data: data_form,
+
+
+            success: (response) => {
+
+                response = JSON.parse(response)
+                
+                if (response.status == 'success') {
+                    $('#contactAlert').addClass('alert-success').removeClass('alert-danger').removeClass('d-none').html('El mensaje ha sido enviado correctamente. Gracias por ponerse en contacto con nosotros.')
+                } else {
+                    $('#contactAlert').addClass('alert-danger').removeClass('alert-success').removeClass('d-none').html(response.message)
+                }
+                
+
+            },
+
+            error: (err) => (console.log = err),
+        });
+    });
+</script>

@@ -1,0 +1,56 @@
+<div class="h-100" style="background-color: #ffffff">
+  <div class="container h-100 py-5">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-10" id="botones">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+        </div>
+        <div class="card rounded-3 mb-4 " id="cart_products"></div>
+        <div id="cart_clear"></div>
+        <div id="cart_clear_sub"></div>
+        <div id="prueba">
+
+
+
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+</div>
+<script>
+  var urlParams = new URLSearchParams(window.location.search);
+  let id_stripe_1 = urlParams.get('stripe_id_1');
+  console.log(id_stripe_1);
+  let data_sessionstripe = {
+    data: id_stripe_1,
+  };
+  function pago_valido(){
+  $.ajax({
+    url: "/Php/success_pay.php",
+    method: "GET",
+    dataType: "json",
+    data: data_sessionstripe,
+    success: function (response) {
+      if (response.status === "success") {
+        $("#prueba").append(response.message
+        )
+        console.log(response)
+      } else {
+        console.log(response)
+      }
+    },
+    error: function () {
+      console.log("Error al procesar la solicitud de checkout");
+    },
+  });
+}
+
+</script>

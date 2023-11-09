@@ -1,0 +1,488 @@
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid">
+    <a class="navbar-brand no-format-link" onclick="getAllProducts()">Tienda</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNavDarkDropdown"
+      aria-controls="navbarNavDarkDropdown"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDarkDropdown">
+      <ul
+        class="navbar-nav d-flex justify-content-start flex-wrap"
+        id="menu"
+      ></ul>
+    </div>
+  </div>
+</nav>
+<hr class="mb-0 mt-0" />
+
+<div class="row">
+  <div class="col p-5 fondo_pagina" id="principal"></div>
+</div>
+
+<!-- Obtener categorias -->
+<script>
+  let menuid = 0;
+  let timeouts = [];
+
+  function addSubcategory(parentId, category, subcategories) {
+    menuid++;
+    let currentmenuid = menuid;
+    if (typeof subcategories == "string") {
+      let str = category.slice(0, -2);
+      $(`#menu${parentId}Dropdown`).append(
+        `<li id="menu${currentmenuid}" class="dropdown-item-mio"><div class="div_li"><a class="dropdown-item-mio raton-mio" id="menu${currentmenuid}Button" data-category="${subcategories}">${str}</a></li></div>`
+      );
+      $(`#menu${currentmenuid}Button`).click(() => getCategoryProducts(subcategories))
+      return;
+    }
+    let subcategoryCount = Object.keys(subcategories).length;
+    $(`#menu${parentId}Dropdown`).append(
+      `<li class="dropend sub-menu dropdown-item-mio d-none" id="menu${currentmenuid}"><div class="div_li"><a class="dropdown-item-mio dropdown-toggle" id="menu${currentmenuid}Button" role="button" " aria-expanded="false">${category}</a><ul class="dropdown-menu  submenu d-none " data-toggle="dropdown" id="menu${currentmenuid}Dropdown"></ul><div class="div_li"></li>`
+    );
+
+    $(`#menu${currentmenuid}`).click(function (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    });
+
+    $(`#menu${currentmenuid}`).mouseenter(function (event) {
+      clearTimeout(timeouts[currentmenuid]);
+      clearTimeout(timeouts[parentId]);
+      $(this).siblings().children("ul").dropdown("hide");
+      $(`#menu${currentmenuid}Dropdown`).removeClass('d-none');
+      // $(`#menu${currentmenuid}Dropdown`).dropdown("show");
+    });
+
+    $(`#menu${currentmenuid}`).mouseleave(function () {
+      timeouts[currentmenuid] = setTimeout(() => {
+        $(`#menu${currentmenuid}Dropdown`).dropdown("hide");
+        $(`#menu${currentmenuid}Dropdown`).addClass('d-none');
+      }, 100);
+    });
+    
+
+    Object.keys(subcategories).forEach((key) => {
+      addSubcategory(currentmenuid, key, subcategories[key]);
+    });
+    $(`#menu${currentmenuid}`).removeClass('d-none');
+  }
+
+  function addCategory(category, subcategories) {
+    menuid++;
+    let currentmenuid = menuid;
+    $("#menu").append(
+      `<li class="nav-item " id="menu${currentmenuid}"><a class="nav-link dropdown hvr-underline-from-center" id="menu${currentmenuid}Button" role="button" aria-expanded="false">${category}</a><ul class="dropdown-menu d-none" data-toggle="dropdown" id="menu${currentmenuid}Dropdown"></ul></li>`
+    );
+    $(`#menu${currentmenuid}`).mouseenter(function (event) {
+      clearTimeout(timeouts[currentmenuid]);
+  
+      
+      $(this).siblings().dropdown("hide");
+      timeouts[currentmenuid] = setTimeout(() => {
+        $(`#menu${currentmenuid}Dropdown`).removeClass("d-none")
+    // $(`#menu${currentmenuid}Dropdown`).dropdown("show");
+
+  }, 500);
+    });
+
+    $(`#menu${currentmenuid}`).mouseleave(function () {
+      clearTimeout(timeouts[currentmenuid]);
+  
+      timeouts[currentmenuid] = setTimeout(() => {
+        $(`#menu${currentmenuid}Dropdown`).dropdown("hide");
+        $(`#menu${currentmenuid}Dropdown`).addClass('d-none');
+      }, 100);
+    });
+
+    $(`#menu${currentmenuid}`).click(function () {
+     
+    });
+    
+    Object.keys(subcategories).forEach((key) => {
+      addSubcategory(currentmenuid, key, subcategories[key]);
+    });
+  }
+
+  $.ajax({
+    method: "POST",
+    url: "/Php/shop.php",
+    data: { type: "getCategories" },
+
+    success: (response) => {
+      response = JSON.parse(response);
+      let obj = response.categories;
+      $("#menu").children().remove();
+      Object.keys(obj).forEach((key) => {
+        addCategory(key, obj[key]);
+      });
+    },
+    error: (err) => console.error(err),
+  });
+</script>
+
+<!--  -->
+<script>
+  const numPagesToShow = 2; // El número de páginas siguientes y anteriores para mostrar
+  const resultados_por_pagina = 20;
+  let number_page=0;
+  let productos_shop = []
+
+
+ 
+  
+
+    // variables para paginación
+    let pagina_actual = 1;
+
+    function cambiarPagina(id) {
+        pagina_actual = parseInt(id.split("_")[1]);
+        $("#botones_paginacion").empty();
+        $("#botones_paginacion").append(
+          `<a class="page-link botones_pagi" href="#" id="pagina_primera" onclick="cambiarPagina('pagina_${1}')"><i class="fa-solid fa-backward"></i></a>`
+        );
+        for (
+          let i = pagina_actual - numPagesToShow;
+          i <= pagina_actual + numPagesToShow;
+          i++
+        ) {
+          if (i < 1 || i > number_page) {
+            // Se verifica si i está dentro de los límites de las páginas disponibles
+            continue; // Si i está fuera de los límites, se salta al siguiente valor del for
+          }
+          $("#botones_paginacion").append(
+            `<a class="page-link botones_pagi" href="#" id="pagina_${i}" onclick="cambiarPagina('pagina_${i}')">${i}</a>`
+          );
+        }
+        $("#botones_paginacion").append(
+          `<a class="page-link botones_pagi" href="#" id="pagina_ultima" onclick="cambiarPagina('pagina_${number_page}')"><i class="fa-solid fa-forward"></i></a>`
+        );
+        mostrarProductos(productos_shop)
+        $(`#pagina_${pagina_actual}`).addClass('active')
+    }
+
+    // función para mostrar los productos de una página específica
+    function mostrarProductos(array = productos_shop) {
+      const inicio = (pagina_actual - 1) * resultados_por_pagina;
+      const final = inicio + resultados_por_pagina;
+
+      // eliminamos los productos actuales
+      $("#total_products").empty();
+
+      // agregamos los productos de la página actual
+      array.slice(inicio, final).forEach(function (obj) {
+        
+        $("#total_products").append(
+          `<div class='card product-card text-black card-has-bg shadow' data-route="/product/${obj.id}">
+        <a href='#' target='_blank' >
+          <img src='/catalogo/${obj.imagen_ftp}' class='card-img-top zoom' alt='...'>
+        </a>
+        <div class='card-body'>
+          <h2 class='card-title mt-0'></h2>
+          <p class='card-text truncate-2 encabezado'>
+              ${obj.descripcion}
+          <p class="precio" >
+            <b>Precio: ${obj.precio_venta} €</b>
+          </p>
+        </div>
+        <div class='card-footer mt-auto'>
+          <div class='media'>
+            <div class='media-body'>
+              <a id='añadir' class='btn fondo_pagina d-block mt-2' >Ver producto</a>
+            </div>
+          </div>
+        </div>
+      </div>`
+        );
+      });
+
+    }
+
+    function getAllProducts() {
+      $.ajax({
+        // Hace la petición
+        method: "POST",
+        url: "/Php/shop.php",
+        data: { type: "getProducts" },
+
+        // si el estado del response es success ejecuta lo siguiente
+        success: (response) => {
+          response = JSON.parse(response);
+          let array = response.productos;
+          productos_shop = array;
+
+          // calculamos el número total de páginas
+          const numero_paginas = Math.ceil(array.length / resultados_por_pagina);
+          number_page=numero_paginas;
+          
+          pagina_actual = 1;
+
+          // eliminamos los productos actuales
+          $("#principal").empty();
+
+          // Agregamos el título
+          $("#principal").append(
+            "<h1 class='mb-5'>Todos los productos</h1>"
+          );
+
+          // agregamos la primera página de productos
+          $("#principal").append(
+            "<div class='card-group' id='total_products'></div>"
+          );
+          mostrarProductos(array);
+
+          // agregamos los botones de paginación
+          $("#principal").append(
+            `<div class="pagination mt-5 justify-content-center" id="botones_paginacion"></div>`
+          );
+          $("#botones_paginacion").append(
+            `<a class="page-link" href="#" id="pagina_primera" onclick="cambiarPagina('pagina_1')"><i class="fa-solid fa-backward"></i></a>`
+          );
+          // agregamos los números de página
+          for (
+            let i = pagina_actual - numPagesToShow;
+            i <= pagina_actual + numPagesToShow;
+            i++
+          ) {
+            if (i < 1 || i > numero_paginas) {
+              // Se verifica si i está dentro de los límites de las páginas disponibles
+              continue; // Si i está fuera de los límites, se salta al siguiente valor del for
+            }
+
+            $("#botones_paginacion").append(
+              `<a class="page-link" href="#" id="pagina_${i}" onclick="cambiarPagina('pagina_${i}')">${i}</a>`
+            );
+          }
+          $("#botones_paginacion").append(
+            `<a class="page-link" href="#" id="pagina_ultima" onclick="cambiarPagina('pagina_${number_page}')"><i class="fa-solid fa-forward"></i></a>`
+          );
+          $(`#pagina_${pagina_actual}`).addClass('active')
+          $(`#pagina_${pagina_actual}`).css("border","solid black 2px")
+
+          // función para cambiar a la página correspondiente
+          
+      },
+
+
+      error: (err) => console.error(err),
+      });
+    }
+
+    function getCategoryProducts(category) {
+      let request = { 
+        type: "getProductsByCategory",
+        data: {category: category}
+      }
+      $.ajax({
+        // Hace la petición
+        method: "POST",
+        url: "/Php/shop.php",
+        data: request,
+
+        // si el estado del response es success ejecuta lo siguiente
+        success: (response) => {
+          response = JSON.parse(response);
+          let array = response.productos;
+          productos_shop = array;
+
+          // calculamos el número total de páginas
+          const numero_paginas = Math.ceil(array.length / resultados_por_pagina);
+          number_page=numero_paginas;
+
+          pagina_actual = 1;
+          
+
+          // eliminamos los productos actuales
+          $("#principal").empty();
+
+          // Agregamos el título
+          $("#principal").append(
+            `<h1 class='mb-5'>${category}</h1>`
+          );
+
+          // agregamos la primera página de productos
+          $("#principal").append(
+            "<div class='card-group' id='total_products'></div>"
+          );
+          mostrarProductos(array);
+
+          // agregamos los botones de paginación
+          $("#principal").append(
+            `<div class="pagination mt-5 justify-content-center" id="botones_paginacion"></div>`
+          );
+          $("#botones_paginacion").append(
+            `<a class="page-link botones_pagi" href="#" id="pagina_primera" onclick="cambiarPagina('pagina_1')"><i class="fa-solid fa-backward"></i></a>`
+          );
+          // agregamos los números de página
+          for (
+            let i = pagina_actual - numPagesToShow;
+            i <= pagina_actual + numPagesToShow;
+            i++
+          ) {
+            if (i < 1 || i > numero_paginas) {
+              // Se verifica si i está dentro de los límites de las páginas disponibles
+              continue; // Si i está fuera de los límites, se salta al siguiente valor del for
+            }
+
+            $("#botones_paginacion").append(
+              `<a class="page-link botones_pagi" href="#" id="pagina_${i}" onclick="cambiarPagina('pagina_${i}')">${i}</a>`
+            );
+          }
+          $("#botones_paginacion").append(
+            `<a class="page-link botones_pagi" href="#" id="pagina_ultima" onclick="cambiarPagina('pagina_${number_page}')"><i class="fa-solid fa-forward"></i></a>`
+          );
+          $(`#pagina_${pagina_actual}`).addClass('active')
+          $(`#pagina_${pagina_actual}`).addClass('botones_pagi')
+
+          // función para cambiar a la página correspondiente
+          
+        },
+
+        error: (err) => console.error(err),
+      }); 
+    }
+
+    $.ajax({
+      // Hace la petición
+      method: "POST",
+      url: "/Php/shop.php",
+      data: { type: "getProducts" },
+
+      // si el estado del response es success ejecuta lo siguiente
+      success: (response) => {
+        response = JSON.parse(response);
+        let array = response.productos;
+        productos_shop = array;
+
+        // calculamos el número total de páginas
+        const numero_paginas = Math.ceil(array.length / resultados_por_pagina);
+        number_page=numero_paginas;
+
+        pagina_actual = 1;
+        
+
+        // eliminamos los productos actuales
+        $("#principal").empty();
+
+        // Agregamos el título
+        $("#principal").append(
+            `<h1 class='mb-5'>Todos los productos</h1>`
+          );
+
+        // agregamos la primera página de productos
+        $("#principal").append(
+          "<div class='card-group' id='total_products'></div>"
+        );
+        mostrarProductos(array);
+
+        // agregamos los botones de paginación
+        $("#principal").append(
+          `<div class="pagination mt-5 justify-content-center" id="botones_paginacion"></div>`
+        );
+        $("#botones_paginacion").append(
+          `<a class="page-link botones_pagi" href="#" id="pagina_primera" onclick="cambiarPagina('pagina_1')"><i class="fa-solid fa-backward"></i></a>`
+        );
+        // agregamos los números de página
+        for (
+          let i = pagina_actual - numPagesToShow;
+          i <= pagina_actual + numPagesToShow;
+          i++
+        ) {
+          if (i < 1 || i > numero_paginas) {
+            // Se verifica si i está dentro de los límites de las páginas disponibles
+            continue; // Si i está fuera de los límites, se salta al siguiente valor del for
+          }
+
+          $("#botones_paginacion").append(
+            `<a class="page-link botones_pagi" href="#" id="pagina_${i}" onclick="cambiarPagina('pagina_${i}')">${i}</a>`
+          );
+        }
+        $("#botones_paginacion").append(
+          `<a class="page-link botones_pagi" href="#" id="pagina_ultima" onclick="cambiarPagina('pagina_${number_page}')"><i class="fa-solid fa-forward"></i></a>`
+        );
+        $(`#pagina_${pagina_actual}`).addClass('active')
+
+        // función para cambiar a la página correspondiente
+        
+      },
+
+      error: (err) => console.error(err),
+    });
+</script>
+
+<!-- Funcionamiento de submenús cuando se pasa el ratón por encima -->
+<script>
+  let timeout = setTimeout(() => {}, 100);
+  $(".sub-menu").click(function (event) {
+    event.stopPropagation();
+    event.preventDefault();
+  });
+
+  $(".sub-menu").mouseenter(function (event) {
+    clearTimeout(timeout);
+    $(this).dropdown("show");
+  });
+
+  $(".sub-menu").mouseleave(function () {
+    timeout = setTimeout(() => {
+      $(this).dropdown("hide");
+    }, 100);
+  });
+</script>
+
+<style>
+  .product-card {
+    border: none;
+    transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+    overflow: hidden;
+    /* margin: 15px; */
+    /* box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2); */
+  
+    .card-footer {
+      background: none;
+      border-top: none;
+    }
+
+    .card-body {
+      transition: all 500ms cubic-bezier(0.19, 1, 0.22, 1);
+    }
+  }
+
+  .product-card:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+  }
+  .encabezado{
+    font-size:medium;
+    text-align: start;
+    margin: 10px 15px;
+  }
+  .precio{
+    font-size:medium;
+    text-align: start;
+    margin: 10px 15px;
+    margin-top: 15px;
+    
+    
+  }
+  .botones_pagi{
+    color: black;
+
+  }
+  .botones_pagi:hover, .botones_pagi:link , .botones_pagi:visited{
+    color: black;
+    background-color: white;
+    border-color: white;
+    border-radius: 10px;
+    margin: 2px;
+  }
+  
+  
+ 
+</style>

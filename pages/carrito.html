@@ -1,0 +1,261 @@
+<div class="h-100" style="background-color: #ffffff">
+  <div class="container h-100 py-5">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-10" id="botones">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+        </div>
+        <div class="card rounded-3 mb-4 " id="cart_products"></div>
+        <div id="cart_clear"></div>
+        <div id="cart_clear_sub"></div>
+        <div id="prueba">
+
+
+
+          <!-- Prueba stripe de tarjeta -->
+
+          <!-- <form action="../Php/checkout.php" method="POST">
+          <button type="submit" id="checkout-button">Checkout</button>
+        </form>  -->
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function vaciar() {
+    $.ajax({
+      // Hace la peticion
+      method: "POST",
+      url: "/Php/vaciar.php",
+
+      // si el estado del response es success ejecuta lo siguiente
+      success: (response) => {
+        response = JSON.parse(response);
+        location.reload();
+      },
+      error: (err) => console.error(err),
+    });
+  };
+
+  let ar_productos = [];
+  let total = 0;
+  function set_ammount(id, ammount) {
+    let data_products = {
+      type: "Productos",
+      data: {
+        id: id,
+        ammount: ammount
+      }
+    };
+    $.ajax({
+
+      // Hace la peticion
+      method: "POST",
+      url: "/Php/set_ammount.php",
+      data: data_products,
+      success: (response) => {
+        
+      },
+      error: (err) => console.error(err),
+    });
+  }
+  function quitar_producto(data2) {
+    let data_products = {
+      type: "Productos",
+      data: data2,
+    };
+
+    $.ajax({
+      // Hace la peticion
+      method: "POST",
+      url: "/Php/borrarproducto.php",
+      data: data_products,
+
+      // si el estado del response es success ejecuta lo siguiente
+      success: (response) => {
+        response = JSON.parse(response);
+        
+        mostrar_carrito();
+      },
+      error: (err) => console.error(err),
+    });
+  }
+
+  function hacer_pedido() {
+    mostrar_carrito()
+    $.ajax({
+      url: "/Php/checkout.php",
+      method: "POST",
+      dataType: "json",
+      success: function (response) {
+        if (response.status === "success") {
+          window.location.href = response.url;
+        } 
+  
+      },
+      error: function () {
+        console.error("Error al procesar la solicitud de checkout");
+      },
+    });
+  }
+
+
+
+
+  function mostrar_carrito() {
+    total = 0;
+    $.ajax({
+      // Hace la peticion
+      method: "POST",
+      url: "/Php/carrito.php",
+      // si el estado del response es success ejecuta lo siguiente
+      success: (response) => {
+        response = JSON.parse(response);
+        
+        if (response.status == "success") {
+          
+          let articulos = response.productos;
+          $("#cart_products").html('');
+          $("#botones_bien").remove();
+          $("#cart_clear").html("");
+          $("#cart_clear_sub").html("");
+          // Hacemos un forEach recorriendo articulos que es el array y lo imprimimos por pantalla
+          articulos.forEach(function (obj) {
+            $("#cart_products").append(
+              `<div class='card rounded-3 mb-4' style="border: 0" id='cart_products ><div class='card-body p-4'><div class='row d-flex justify-content-between align-items-center m-3'><div  class='col-md-2 col-lg-2 col-xl-2' style="cursor: pointer" data-route='/product/` + obj.id + ` ' ><img src='../catalogo/${obj.imagen}' class='img-fluid' style='max-width:150px '></div><div class='col-md-3 col-lg-3 col-xl-3 '><p id='` + obj.nombre +
+              "' class='lead fw-normal mb-2 titulo_carrito'><a id='titulo_carrito' data-route='/product/" + obj.id + "'>" +
+              obj.nombre + ' (' + obj.ref +
+              ")</a></p></div><div class='col-md-3 col-lg-3 col-xl-2 d-flex'><button id='restar_" + obj.id + "' class='btn btn-link px-2' onclick=\"this.parentNode.querySelector('input[type=number]').stepDown();\"\"><i class='fas fa-minus'></i></button><input id='" +
+              obj.id +
+              "_cantidad' min='0' name='quantity' value='" +
+              obj.cantidad +
+              "' type='number' class='form-control form-control-sm' /><button  id='sumar_" +
+              obj.id +
+              "' class='btn btn-link px-2' onclick=\"this.parentNode.querySelector('input[type=number]').stepUp();\"><i class='fas fa-plus'></i></button></div><div class='col-md-3 col-lg-2 col-xl-2 offset-lg-1'><h5 class='mb-0' id='" +
+              obj.id +
+              "_precio'>" +
+              (obj.precio * obj.cantidad).toFixed(2) + " €" +
+              `</h5></div><div class='col-md-1 col-lg-1 col-xl-1 text-end'><a  onclick='quitar_producto("${obj.id}")' class='text-danger'><i id="basura" class='fas fa-trash fa-lg' ></i></a></div></div></div></div>`
+            );
+            total += obj.precio * obj.cantidad;
+
+            $(`#${obj.id}_cantidad`).on("input", function (event) {
+              set_ammount(obj.id, $(`#${obj.id}_cantidad`).val())
+              total -= obj.precio * obj.cantidad
+              obj.cantidad = $(`#${obj.id}_cantidad`).val()
+              total += obj.precio * obj.cantidad
+              $(`#${obj.id}_precio`).html((obj.precio * obj.cantidad).toFixed(2) + " €")
+              $('#price_total').html('Total: ' + total.toFixed(2) + " €")
+
+              if ($(`#${obj.id}_cantidad`).val() === '0') {
+                quitar_producto(obj.id)
+              }
+            })
+
+            $(`#restar_${obj.id}`).on("click", function (event) {
+              set_ammount(obj.id, $(`#${obj.id}_cantidad`).val())
+              total -= obj.precio * obj.cantidad
+              obj.cantidad = $(`#${obj.id}_cantidad`).val()
+              total += obj.precio * obj.cantidad
+              $(`#${obj.id}_precio`).html((obj.precio * obj.cantidad).toFixed(2) + " €")
+              $('#price_total').html('Total: ' + total.toFixed(2) + " €")
+
+              if ($(`#${obj.id}_cantidad`).val() === '0') {
+                quitar_producto(obj.id)
+              }
+            })
+
+            $(`#sumar_${obj.id}`).on("click", function (event) {
+              set_ammount(obj.id, $(`#${obj.id}_cantidad`).val())
+              total -= obj.precio * obj.cantidad
+              obj.cantidad = $(`#${obj.id}_cantidad`).val()
+              total += obj.precio * obj.cantidad
+              $(`#${obj.id}_precio`).html((obj.precio * obj.cantidad).toFixed(2) + " €")
+              $('#price_total').html('Total: ' + total.toFixed(2) + " €")
+
+              if ($(`#${obj.id}_cantidad`).val() === '0') {
+                quitar_producto(obj.id)
+              }
+            })
+
+
+            // Agrega la nueva fila a la tabla con el precio total
+          });
+
+          $("#botones").append(
+            `<div class=' row' id='botones_bien'><div class='col-12 col-lg-2'><button type='button' onclick="hacer_pedido()" class='btn fondo_pagina' id='checkout-button'>Proceder al pago</button> </div><div class=' col-12 col-lg-7'><button type='button' class='btn fondo_pagina' id='vaciar'>Vaciar Carrito</button></div><div class=' col-12 col-lg-3'><span  id='price_total'> Total: ` + total.toFixed(2) + ` €` + `</span></div></div>
+         `);
+
+          
+          $("#vaciar").click(function () {
+            $.ajax({
+              // Hace la peticion
+              method: "POST",
+              url: "/Php/vaciar.php",
+
+              // si el estado del response es success ejecuta lo siguiente
+              success: (response) => {
+                response = JSON.parse(response);
+                location.reload();
+              },
+              error: (err) => console.error(err),
+            });
+          });
+
+
+        }
+        // En caso de que estes logueado y no tengas nada en el carrito
+        else if (response.status == "error") {
+          $("#cart_products").html('');
+          $("#botones_bien").hide()
+          $("#cart_clear").html("<div class='row'><div class='col-12 col-lg-5'></div><div class='col-12 col-lg-7' id='message_cart'>Tu carrito esta vacio</div></div>");
+          $("#cart_clear_sub").html("<div class='row'><div class='col-12 col-lg-4'></div><div class='col-12 col-lg-8' id='message_cart_sub'>Actualmente no tienes ningun producto dentro del carrito</div></div>");
+
+
+        }
+      },
+
+      error: (err) => console.error(err),
+    });
+
+
+
+  }
+</script>
+<style>
+  #message_cart {
+    font-size: 150%;
+    font-weight: bold;
+  }
+
+  #message_cart_sub {
+    margin-top: 1%;
+    font-style: italic;
+  }
+
+  #price_total {
+    font-size: larger;
+    font-weight: bold;
+  }
+
+  #titulo_carrito:link,
+  #titulo_carrito:active,
+  #titulo_carrito:hover,
+  #titulo_carrito:visited {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+  }
+
+  #botones_bien {
+    align-items: center;
+  }
+
+  #basura {
+    cursor: pointer;
+  }
+</style>
+</div>

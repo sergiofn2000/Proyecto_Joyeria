@@ -1,0 +1,302 @@
+<!-- Modal login -->
+<div class="modal fade" id="loginModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Iniciar sesión</h2>
+                <a class="btn-close no-format-link" data-bs-dismiss="modal" id="cierre"></a>
+            </div>
+            <div class="modal-body p-4">
+                <div class="alert alert-danger d-none" role="alert" id="loginAlert">
+                    Replace this with alert text.
+                </div>
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="loginUser" class="form-label">Nombre de usuario o correo electrónico</label>
+                        <input type="text" class="form-control" placeholder="correoelectronico@gmail.com"id="loginUser" name="nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="loginPassword" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" placeholder="••••••••••••" id="loginPassword" name="contra">
+                    </div>
+                    <div>
+                        <input type="checkbox" class="form-check-input" id="loginRemember">
+                        <label class="form-check-label" for="loginRemember">Recúerdame</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex flex-column p-4">
+                <div class="modal-footer-links mb-3">
+                    <a class="no-format-link" data-bs-toggle="modal" data-bs-target="#singupModal">Registrarse</a> - 
+                    <a class="no-format-link" data-bs-toggle="modal" data-bs-target="#forgotModal">Contraseña olvidada</a>
+                </div>
+                <button type="submit" form="loginForm" class="btn fondo_pagina d-block w-100 m-0">Iniciar sesión</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal registro -->
+<div class="modal fade" id="singupModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Registrarse</h2>
+                <a class="btn-close no-format-link" data-bs-dismiss="modal"></a>
+            </div>
+            <div class="modal-body p-4">
+                <div class="alert alert-danger d-none" role="alert" id="singupAlert">
+                    Replace this with alert text.
+                </div>
+                <form id="singupForm">
+                    <div class="mb-3">
+                        <label for="singupUser" class="form-label">Nombre de usuario</label>
+                        <input type="text" class="form-control" placeholder="Usuario1234" id="singupUser" name="nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="singupMail" class="form-label">Dirección de correo electrónico</label>
+                        <input type="mail" class="form-control" placeholder="correoelectronico@mail.com"  id="singupMail" name="correo">
+                    </div>
+                    <div class="mb-3">
+                        <label for="singupName" class="form-label">Nombre completo</label>
+                        <input type="text" class="form-control" placeholder="Antonio García Rodriguez" id="singupName" name="nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="singupDateOfBirth" class="form-label">Fecha de nacimiento</label>
+                        <input type="date" class="form-control" id="singupDateOfBirth" name="nombre">
+                    </div>
+                    <div class="mb-3">
+                        <label for="singupPassword" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" placeholder="••••••••••••"  id="singupPassword" name="contra">
+                    </div>
+                    <div class="mb-3">
+                        <label for="singupConfirmPassword" class="form-label">Confirmar contraseña</label>
+                        <input type="password" class="form-control" placeholder="••••••••••••"  id="singupConfirmPassword" name="contra2">
+                    </div>
+                    <div>
+                        <input type="checkbox" class="form-check-input" id="singupAccept" name="ok">
+                        <label class="form-check-label" for="singupAccept">He leído y acepto la <a href="">política de privacidad</a>.</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex flex-column p-4">
+                <div class="modal-footer-links mb-3">
+                    <a class="no-format-link" data-bs-toggle="modal" data-bs-target="#loginModal">¿Ya tiene una cuenta? Inicie sesión</a>
+                </div>
+                <button type="submit" form="singupForm" class="btn fondo_pagina d-block w-100 m-0">Registrarse</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal contraseña olvidada -->
+<div class="modal fade" id="forgotModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Restablecer contraseña</h2>
+                <a class="btn-close no-format-link" data-bs-dismiss="modal"></a>
+            </div>
+            <div class="modal-body p-4">
+                <div class="alert alert-danger d-none" role="alert" id="forgotAlert">
+                    Replace this with alert text.
+                </div>
+                <form id="forgotForm">
+                    <div class="mb-3">
+                        <label for="forgotUser" class="form-label">Dirección de correo electrónico</label>
+                        <input type="text" class="form-control" id="forgotUser" placeholder="correoelectronico@mail.com">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex flex-column p-4">
+                <div class="modal-footer-links mb-3">
+                    <a class="no-format-link" data-bs-toggle="modal" data-bs-target="#loginModal">¿Recordó su contraseña? Inicie sesión</a>
+                </div>
+                <button type="submit" form="forgotForm" class="btn fondo_pagina d-block w-100 m-0">Resetear contraseña</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal contraseña olvidada - Nueva contraseña -->
+<div class="modal fade" id="changeModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Restablecer contraseña</h2>
+                <a class="btn-close no-format-link" data-bs-dismiss="modal"></a>
+            </div>
+            <div class="modal-body p-4">
+                <div class="alert alert-danger d-none" role="alert" id="changeAlert">
+                    Replace this with alert text.
+                </div>
+                <form id="changeForm">
+                    <input type="password" class="d-none" id="changeToken" disabled>
+                    <div class="mb-3">
+                        <label for="changePassword" class="form-label">Nueva contraseña</label>
+                        <input type="password" class="form-control" id="changePassword" placeholder="••••••••••••">
+                    </div>
+                    <div class="mb-3">
+                        <label for="changeConfirm" class="form-label">Confirmar contraseña</label>
+                        <input type="password" class="form-control" id="changeConfirm" placeholder="••••••••••••">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer d-flex flex-column p-4">
+                <div class="modal-footer-links mb-3">
+                    <a class="no-format-link" data-bs-toggle="modal" data-bs-target="#loginModal">¿Recordó su contraseña? Inicie sesión</a>
+                </div>
+                <button type="submit" form="changeForm" class="btn fondo_pagina d-block w-100 m-0">Cambiar contraseña</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Barra superior -->
+<div class="row topbar">
+    <div class="col-12 col-xl-4 d-none d-xl-flex justify-content-start flex-wrap">
+        <div><a href="tel:+34687859323" class="no-format-link"><i class="fa-solid fa-phone"></i> 633 33 33 33</a></div>
+        <div class="ms-3"><a href="mailto:contacto@joyeria.com" class="no-format-link"><i class="fa-solid fa-envelope"></i> contacto@joyeria.com</a></div>
+    </div>
+    <div class="col-12 col-xl-4 text-center">
+        Gastos de envío gratis para compras superiores a 300€.
+    </div>
+    <div class="col-12 col-xl-4 text-end d-none d-xl-block">
+        <a href="https://www.facebook.com/" class="no-format-link" target="_blank"><i class="fa-brands fa-square-facebook"></i></a>
+        <a href="https://www.instagram.com/" class="ms-1 no-format-link" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+</div>
+
+<!-- Barra de navegación -->
+
+<div class="row navbar pb-0">
+    <div class="col-12 col-xl-3 ps-xl-5 mb-2 d-flex justify-content-start align-items-center">
+        <input type="checkbox" id="toggle-navbar-checkbox" class="d-none"></input>
+        <a class="no-format-link" onclick="toggleNavbar()"><i class="fa-solid fa-bars d-xl-none me-3"></i></a>
+    </div>
+    <div class="col-12 col-xl-6 text-center">
+        <img src="/Fotos/Logo/logo_tienda.png" alt="JOYERIA" class=" logo_img">
+        <div class="mt-3 d-flex flex-column flex-xl-row flex-wrap justify-content-around navbar-links navbar-hidden d-none d-xl-flex">
+            <a data-route="/" class="no-format-link mb-4 mb-xl-0">Inicio</a>
+            <a data-route="/shop" class="no-format-link mb-4 mb-xl-0">Tienda</a>
+            <a data-route="/contact" class="no-format-link">Contacto</a>
+        </div>
+    </div>
+    <hr class="my-3 d-xl-none navbar-hidden d-none">
+    <div id="loggedButtons" class="col-12 col-xl-3 d-flex d-xl-block d-none text-center text-xl-end justify-content-around justify-content-xl-end navbar-hidden pe-xl-5">
+        <a class="no-format-link unlogged" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="fa-solid fa-right-to-bracket"></i></a>
+        <a class="no-format-link unlogged" data-bs-toggle="modal" data-bs-target="#singupModal"><i class="fa-solid fa-user-plus ms-3"></i></a>
+        <a data-route="/cart" class="no-format-link unlogged d-none"><i class="fa-solid fa-cart-shopping ms-3"></i></a>
+        <a class="no-format-link logged d-none" data-route="/account"><i class="fa-solid fa-user"></i></a>
+        <a class="no-format-link logged d-none" data-route="/wishlist"><i class="fa-solid fa-heart ms-3"></i></a>
+        <a data-route="/cart" class="no-format-link logged d-none"><i class="fa-solid fa-cart-shopping ms-3"></i></a>
+        <a data-route="/cart" class="no-format-link logged d-none" onclick="logout()"><i class="fa-solid fa-right-from-bracket ms-3"></i></a>
+    </div>
+    <hr class="mt-3 mb-0">
+</div>
+
+
+<!-- Cosas varias -->
+<script>
+    // Botones de búsqueda y menú en movil
+    toggleNavbar = () => $(".navbar-hidden").toggleClass("d-none")
+
+    clearModalForms = () => {
+        $("#loginForm").trigger("reset");
+        $("#singupForm").trigger("reset");
+        $("#forgotForm").trigger("reset");
+        $("#changeForm").trigger("reset");
+        $("#newPass").trigger("reset");
+        $("#addressForm").trigger("reset");
+        $("#loginAlert").addClass("d-none").removeClass('alert-success').addClass('danger-success')
+        $("#singupAlert").addClass("d-none").removeClass('alert-success').addClass('danger-success')
+        $("#forgotAlert").addClass("d-none").removeClass('alert-success').addClass('danger-success')
+        $("#changeAlert").addClass("d-none").removeClass('alert-success').addClass('danger-success')
+        $("#changepassAlert").addClass("d-none").removeClass('alert-success').addClass('danger-success')
+        $("#addressAlert").addClass("d-none").removeClass('alert-success').addClass('danger-success')
+        destination = ''
+    }
+
+    $('.modal').on("hide.bs.modal", clearModalForms)
+
+    // Comprobación inicio de sesión
+    $("#loginModal").on("show.bs.modal", (event) => {
+        if (sessionStarted) {
+            event.preventDefault()
+            $.router.go('account')
+        }
+    })
+
+    // Actualización de botones
+    let sessionData = getSessionData()
+    if (sessionData[0]) {
+        $('.unlogged').addClass('d-none')
+        $('.logged').removeClass('d-none')
+    } else {
+        $('.logged').addClass('d-none')
+        $('.unlogged').removeClass('d-none')
+    }
+
+    $(document).on("setSessionData", (event, sessionStarted) => {
+        if (sessionStarted) {
+            $('.unlogged').addClass('d-none')
+            $('.logged').removeClass('d-none')
+        } else {
+            $('.logged').addClass('d-none')
+            $('.unlogged').removeClass('d-none')
+        }
+    })
+
+      
+</script>
+
+<!-- Inicio de sesión -->
+<script>
+    $("#loginForm").submit((event) => {
+        event.preventDefault()
+        let user = $('#loginUser').val()
+        let pass = $('#loginPassword').val()
+        let remember = $('#loginRemember').prop('checked')
+        credentialLogin(user, pass, remember)
+    })
+</script>
+
+<!-- Registro -->
+<script>
+    $("#singupForm").submit((event) => {
+        event.preventDefault()
+        singupUser(
+            $('#singupUser').val(),
+            $('#singupMail').val(),
+            $('#singupName').val(),
+            $('#singupDateOfBirth').val(),
+            $('#singupPassword').val(),
+            $('#singupConfirmPassword').val(),
+            $('#singupAccept').prop('checked')
+        )
+    })
+</script>
+
+<!-- Resetear contraseña -->
+
+<script>
+    $("#forgotForm").submit((event) => {
+        event.preventDefault()
+        forgotPassword(
+            $('#forgotUser').val()
+        )
+    })
+</script>
+
+<!-- Resetear contraseña - cambiar contraseña-->
+
+<script>
+    $("#changeForm").submit((event) => {
+        event.preventDefault()
+        changeForgottenPassword(
+            $('#changeToken').val(),
+            $('#changePassword').val(),
+            $('#changeConfirm').val()
+        )
+    })
+</script>
