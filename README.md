@@ -1,5 +1,27 @@
-# Proyecto de Joyería en Local (Sin Hosting)
 
+# Proyecto de Joyería en Local (Sin Hosting)
+Bienvenido a Joyería Elegante, tu destino digital para descubrir y adquirir exquisitas piezas de joyería. Esta plataforma web, diseñada con un enfoque en la elegancia y la facilidad de uso, es completamente receptiva, brindando una experiencia de compra fluida en dispositivos de todos los tamaños.
+
+## Características Principales:
+### 1. Tienda Virtual Completa
+Explora nuestra extensa colección de joyas, que abarca desde elegantes collares hasta deslumbrantes anillos. Organizadas en categorías intuitivas, encontrarás fácilmente la joya perfecta para cualquier ocasión.
+
+### 2. Carrito de Compras y Lista de Favoritos
+Añade tus joyas favoritas al carrito de compras o guárdalas en tu lista de favoritos para una experiencia de compra personalizada. Nunca pierdas de vista esas piezas que te robaron el corazón.
+
+### 3. Cuenta de Usuario
+Crea tu cuenta personalizada para acceder a funciones exclusivas. Administra tus pedidos, guarda tus direcciones de envío y mantén un registro de tus compras anteriores.
+
+### 4. Autenticación Segura
+Inicia sesión de manera segura para acceder a todas las funcionalidades de la plataforma. Tu información personal está protegida mediante sólidas medidas de seguridad.
+
+### 5. Proceso de Pago Seguro con Stripe
+Realiza pagos sin preocupaciones gracias a nuestra integración con Stripe, una reconocida pasarela de pago. Tu información financiera está protegida y tus transacciones son seguras.
+
+### 6. Experiencia de Usuario Intuitiva y Responsive
+Diseñada con el usuario en mente, nuestra plataforma ofrece una navegación fluida y una interfaz intuitiva, adaptándose perfectamente a dispositivos móviles, tabletas y computadoras de escritorio.
+
+## Estado Actual del Proyecto
 Este proyecto es un ejemplo de una página web para una joyería o cualquier tienda en línea que vende artículos. Actualmente, no está alojado en un servidor de hosting debido a los costos, pero en el futuro, se alojará en un servidor para mostrarlo adecuadamente en un portafolio web.
 
 ## Guía de Instalación
