@@ -1,6 +1,6 @@
 
 # Proyecto de Joyería en Local (Sin Hosting)
-Bienvenido a Joyería Elegante, tu destino digital para descubrir y adquirir exquisitas piezas de joyería. Esta plataforma web, diseñada con un enfoque en la elegancia y la facilidad de uso, es completamente receptiva, brindando una experiencia de compra fluida en dispositivos de todos los tamaños.
+Bienvenido al Poryecto Joyeria, tu destino digital para descubrir y adquirir exquisitas piezas de joyería. Esta plataforma web, diseñada con un enfoque en la elegancia y la facilidad de uso, es completamente receptiva, brindando una experiencia de compra fluida en dispositivos de todos los tamaños.
 
 ## Características Principales:
 ### 1. Tienda Virtual Completa
