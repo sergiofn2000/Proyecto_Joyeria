@@ -2,7 +2,7 @@
 # Proyecto de Joyería en Local (Sin Hosting)
 El Proyecto Joyería no solo se distingue por su elegante diseño y eficiencia técnica, sino también por la implementación de handlers especializados para salvaguardar la seguridad y gestionar procesos clave:
 ## Detalles
-### Frontend Avanzado: 
+### Frontend: 
 Desarrollado con JavaScript, CSS, Bootstrap y jQuery para lograr un diseño atractivo.
 
 ### Backend Eficiente: 
