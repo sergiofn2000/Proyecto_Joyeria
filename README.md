@@ -1,28 +1,37 @@
 
 # Proyecto de Joyería en Local (Sin Hosting)
-Bienvenido al Proyecto Joyeria, tu destino digital para descubrir y adquirir exquisitas piezas de joyería. Esta plataforma web, diseñada con un enfoque en la elegancia y la facilidad de uso, es completamente receptiva, brindando una experiencia de compra fluida en dispositivos de todos los tamaños.
+El Proyecto Joyería no solo se distingue por su elegante diseño y eficiencia técnica, sino también por la implementación de handlers especializados para salvaguardar la seguridad y gestionar procesos clave:
+## Detalles
+### Frontend Avanzado: 
+Desarrollado con JavaScript, CSS, Bootstrap y jQuery para lograr un diseño atractivo.
 
-## Características Principales:
-### 1. Tienda Virtual Completa
-Explora nuestra extensa colección de joyas, que abarca desde elegantes collares hasta deslumbrantes anillos. Organizadas en categorías intuitivas, encontrarás fácilmente la joya perfecta para cualquier ocasión.
+### Backend Eficiente: 
+PHP puro impulsa la lógica del servidor, garantizando un rendimiento sólido y una gestión eficiente de los datos.
 
-### 2. Carrito de Compras y Lista de Favoritos
-Añade tus joyas favoritas al carrito de compras o guárdalas en tu lista de favoritos para una experiencia de compra personalizada. Nunca pierdas de vista esas piezas que te robaron el corazón.
+### Base de Datos MySQL: 
+La base de datos MySQL respalda la gestión eficiente de productos, cuentas de usuario y pedidos, proporcionando un almacenamiento fiable.
 
-### 3. Cuenta de Usuario
-Crea tu cuenta personalizada para acceder a funciones exclusivas. Administra tus pedidos, guarda tus direcciones de envío y mantén un registro de tus compras anteriores.
+###  Seguridad Anti-SQL Injection: 
+Se ha implementado un handler personalizado en PHP para evitar SQL injection. Este handler proporciona funciones seguras para consultas y ejecuciones, protegiendo eficazmente la integridad de la base de datos.
 
-### 4. Autenticación Segura
-Inicia sesión de manera segura para acceder a todas las funcionalidades de la plataforma. Tu información personal está protegida mediante sólidas medidas de seguridad.
+### Gestión de Pagos Segura: 
+Se implementa la API de Stripe para garantizar transacciones seguras y sin preocupaciones, protegiendo la información financiera de los usuarios.
 
-### 5. Proceso de Pago Seguro con Stripe
-Realiza pagos sin preocupaciones gracias a nuestra integración con Stripe, una reconocida pasarela de pago. Tu información financiera está protegida y tus transacciones son seguras.
+### Interactividad AJAX: 
+La tecnología AJAX se emplea para una experiencia de usuario más fluida, permitiendo la carga dinámica de la tienda, el carrito y otras secciones sin recargar la página.
 
-### 6. Experiencia de Usuario Intuitiva y Responsive
-Diseñada con el usuario en mente, nuestra plataforma ofrece una navegación fluida y una interfaz intuitiva, adaptándose perfectamente a dispositivos móviles, tabletas y computadoras de escritorio.
+### Routing Dinámico: 
+Se implementan rutas para transformar la página en una single page application (SPA), mejorando la velocidad y la eficiencia de la navegación.
 
-## Estado Actual del Proyecto
-Este proyecto es un ejemplo de una página web para una joyería o cualquier tienda en línea que vende artículos. Actualmente, no está alojado en un servidor de hosting debido a los costos, pero en el futuro, se alojará en un servidor para mostrarlo adecuadamente en un portafolio web.
+### Handler de Correo Electrónico: 
+Se ha implementado un handler de correo electrónico que utiliza la librería PHPMailer para gestionar y enviar correos electrónicos de manera eficiente y segura.
+
+### Handler de Token: 
+Un handler de token personalizado permite la creación, verificación y cancelación segura de tokens. Este mecanismo garantiza la seguridad en procesos como restablecimiento de contraseña y otras operaciones sensibles.
+
+### Estado Actual del Proyecto:
+Aunque actualmente no se encuentra alojado en un servidor de hosting, este proyecto está listo para demostrar su funcionalidad en un entorno de producción, proporcionando una solución completa para una tienda de joyería en línea.
+
 
 ## Guía de Instalación
 
@@ -42,18 +51,21 @@ Este proyecto es un ejemplo de una página web para una joyería o cualquier tie
   
 3. Ejecuta el siguiente comando para clonar el repositorio desde GitHub:
     
-   
+   ```
    git clone https://github.com/sergiofn2000/Proyecto_Joyeria.git
+   ```
+   
 ### Paso 3: Configuración del VirtualHost
 
 1. Abre el archivo C:\Windows\System32\drivers\etc\hosts en un editor de texto como administrador.
 
 2. Agrega la siguiente línea al archivo y guárdalo:
-
+```
   127.0.0.1:8080 joyeria.local.com
-
+```
 3. Abre el archivo C:\xampp\apache\conf\extra\httpd-vhosts.conf y agrega el siguiente bloque:
 
+```
 <VirtualHost joyeria.local.com:8080>
   DocumentRoot "C:\xampp\htdocs\TU RUTA"
   ServerAlias joyeria.local.com
@@ -63,13 +75,13 @@ Este proyecto es un ejemplo de una página web para una joyería o cualquier tie
     Require all granted
   </Directory>
 </VirtualHost>
-
+```
 4.Abre el Panel de Control de XAMPP y haz clic en "Config" para Apache.
 
 5.Selecciona "httpd.conf" y agrega la siguiente línea al archivo:
-
+```
 Listen 8080
-
+```
 6.Guarda los cambios.
 
 7.Reinicia el servidor Apache desde el Panel de Control de XAMPP.
@@ -86,6 +98,6 @@ Listen 8080
 ### Paso 5: Acceder al Proyecto
 
 Ahora, puedes acceder a tu proyecto en tu navegador utilizando la siguiente URL:
-
+```
 http://joyeria.local.com:8080
-
+```
