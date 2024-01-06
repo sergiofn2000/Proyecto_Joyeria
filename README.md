@@ -1,7 +1,7 @@
 
 # Proyecto de Joyería en Local (Sin Hosting)
 El Proyecto Joyería no solo se distingue por su elegante diseño y eficiencia técnica, sino también por la implementación de handlers especializados para salvaguardar la seguridad y gestionar procesos clave:
-## Detalles
+## Sobre el proyecto
 ### Frontend: 
 Desarrollado con JavaScript, CSS, Bootstrap y jQuery para lograr un diseño atractivo.
 
@@ -32,6 +32,33 @@ Un handler de token personalizado permite la creación, verificación y cancelac
 ### Estado Actual del Proyecto:
 Aunque actualmente no se encuentra alojado en un servidor de hosting, este proyecto está listo para demostrar su funcionalidad en un entorno de producción, proporcionando una solución completa para una tienda de joyería en línea.
 
+## Capturas de la Pagina Web
+<details>
+  <summary>Pagina Inicio</summary>
+  <img src="./img/inicio.gif"  >
+</details>
+<details>
+  <summary>Pagina Tienda</summary>
+  <img src="./img/tienda4.png" width="70%"  >
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="./img/Tienda1.png " width="70%"  >
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="./img/Tienda2.png" width="70%"  >
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="./img/Tienda3.png" width="70%">
+</details>    
+<details>
+  <summary>Pagina Carrito</summary>
+  <img src="./img/Carrito.png"  >
+</details>
+<details>
+  <summary>Pagina Favoritos</summary>
+  <img src="./img/favoritos.png"  >
+</details>
+<details>
+  <summary>Pagina usuario</summary>
+  <img src="./img/Cuenta.png"  >
+</details>
 
 ## Guía de Instalación
 
